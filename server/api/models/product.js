@@ -5,7 +5,8 @@ module.exports = function(sequelize, DataTypes) {
     name: DataTypes.STRING,
     category_id: DataTypes.INTEGER,
     price: DataTypes.FLOAT,
-    portion: DataTypes.STRING
+    portion: DataTypes.STRING,
+    image: DataTypes.STRING
   }, {
     freezeTableName: true
   });

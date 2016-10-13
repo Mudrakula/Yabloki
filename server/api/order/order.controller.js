@@ -10,3 +10,11 @@ exports.index = function(req, res) {
     });
   });
 };
+
+exports.create = function(req, res) {
+  Order.sync().then(function() {
+    Order.create(req.body).then(function() {
+      res.status(200).send('success');
+    });
+  });
+};
