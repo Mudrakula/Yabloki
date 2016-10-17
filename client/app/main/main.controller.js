@@ -35,8 +35,9 @@ angular.module('yablokiApp')
       product.count = ! product.count  ? 2 : (product.count + 1);
     };
 
-    $scope.addProduct = function(product) {
+    $scope.addProduct = function(product, type) {
       product.count = product.count || 1;
+      product.type = type;
       $scope.order.products.push(_.clone(product));
       product.count = 1;
     };
@@ -60,7 +61,7 @@ angular.module('yablokiApp')
       $http.post('/api/orders', {
         time: Date.now(),
         products: angular.toJson(order.products),
-        customer: 1
+        customer: 2
       }).then(function(result) {
         if (result.status === 200)
           $scope.order = {

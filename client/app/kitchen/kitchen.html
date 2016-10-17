@@ -1,0 +1,7 @@
+<div ng-repeat="order in orders">
+  <h3>Table #{{order.customer}}</h3>
+  <span>{{order.time | date: 'HH:mm:ss'}}</span>
+  <div ng-repeat="product in order.products">
+    {{product.name}} {{product.count}}
+  </div>
+</div>
