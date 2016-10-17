@@ -8,5 +8,7 @@ exports.index = function(req, res) {
     Product.findAll().then(function(result) {
       return res.status(200).json(result);
     });
+  }, function(error) {
+    console.log(error);
   });
 };
