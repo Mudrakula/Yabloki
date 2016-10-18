@@ -5,7 +5,10 @@ var Order = require('../models').Order;
 
 exports.index = function(req, res) {
   Order.sync().then(function() {
-    Order.findAll().then(function(result) {
+    var field = req.params.type + '_status';
+    Order.findAll({
+      where: {[field]: 0}
+    }).then(function(result) {
       return res.status(200).json(result);
     });
   });
@@ -14,7 +17,19 @@ exports.index = function(req, res) {
 exports.create = function(req, res) {
   Order.sync().then(function() {
     Order.create(req.body).then(function() {
-      res.status(200).send('success');
+      return res.status(200).send('success');
+    });
+  });
+};
+
+exports.complete = function(req, res) {
+  Order.sync().then(function() {
+    Order.update({
+      [req.body.type]: 1
+    }, {
+      where: {id: req.body.id}
+    }).then(function(result) {
+      return res.status(200).send('success');
     });
   });
 };

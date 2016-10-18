@@ -1,0 +1,26 @@
+h1 {
+  margin-bottom: 30px;
+}
+
+.order:first-of-type {
+  border-top: 1px solid #cecece;
+}
+
+.order {
+  border-bottom: 1px solid #cecece;
+  padding: 20px 10px;
+}
+
+.order-customer {
+  display: block;
+  font-size: 20px;
+}
+
+.order-time {
+  font-size: 24px;
+}
+
+.accepted-at {
+  font-size: 16px;
+  opacity: .5;
+}

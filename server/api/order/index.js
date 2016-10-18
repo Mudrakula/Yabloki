@@ -5,6 +5,7 @@ var controller = require('./order.controller');
 
 var router = express.Router();
 
-router.get('/', controller.index);
+router.get('/:type', controller.index);
 router.post('/', controller.create);
+router.post('/done', controller.complete);
 module.exports = router;

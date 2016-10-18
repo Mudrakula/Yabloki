@@ -1,7 +1,23 @@
-<div ng-repeat="order in orders">
-  <h3>Table #{{order.customer}}</h3>
-  <span>{{order.time | date: 'HH:mm:ss'}}</span>
-  <div ng-repeat="product in order.products">
-    {{product.name}} {{product.count}}
+<div class="container">
+  <h1>Bar</h1>
+  <div class="order row" ng-repeat="order in orders">
+    <div class="col-md-4 order-info">
+      <span class="order-customer">Table #{{order.customer}}</span>
+      <span class="order-time">
+        <span class="accepted-at">Accepted at </span>
+        {{order.time | date: 'HH:mm'}}
+      </span>
+    </div> <!-- .order-customer -->
+    <div class="col-md-4 order-products">
+      <div ng-repeat="product in order.products">
+        {{product.count}} &times; {{product.name}}
+      </div>
+    </div> <!-- .order-products -->
+    <div class="col-md-2 order-status">
+      {{status[order.bar_status]}}
+    </div> <!-- .order-status -->
+    <div class="col-md-2 order-actions">
+      <span class="btn btn-done" ng-click="go(order)">Done!</span>
+    </div> <!-- .order-actions -->
   </div>
-</div>
+</div> <!-- .container -->
