@@ -1,20 +1,22 @@
-<div class="col-md-2 categories">
-  <h3 ng-class="{'picked-category': pickedCategory === false}" class="main-category" ng-click="pickCategory(false)">All</h3>
-  <div class="dishes main-category">
-    <h3 ng-class="{'picked-category': pickedCategory == 'dish'}" ng-click="pickCategory('dish')">Dishes</h3>
-    <div class="category" ng-class="{'picked-category': pickedCategory === category.id}" ng-repeat="category in categories.dish" ng-click="pickCategory(category.id)">
-      {{category.name}}
-    </div>
-  </div> <!-- .dishes -->
-  <div class="bar main-category">
-    <h3 ng-class="{'picked-category': pickedCategory == 'bar'}" ng-click="pickCategory('bar')">Bar</h3>
-    <div class="category" ng-class="{'picked-category': pickedCategory === category.id}" ng-repeat="category in categories.bar" ng-click="pickCategory(category.id)">
-      {{category.name}}
-    </div>
-  </div> <!-- .bar -->
-</div> <!-- .categories -->
+<div class="col-md-2 sidebar">
+  <div class="categories">
+    <div ng-class="{'picked-category': pickedCategory === false}" class="category main-category" ng-click="pickCategory(false)">All</div>
+    <div class="dishes">
+      <div ng-class="{'picked-category': pickedCategory == 'dish'}" class="category main-category" ng-click="pickCategory('dish')">Dishes</div>
+      <div class="category" ng-class="{'picked-category': pickedCategory === category.id}" ng-repeat="category in categories.dish" ng-click="pickCategory(category.id)">
+        {{category.name}}
+      </div>
+    </div> <!-- .dishes -->
+    <div class="bar">
+      <div ng-class="{'picked-category': pickedCategory == 'bar'}" class="category main-category" ng-click="pickCategory('bar')">Bar</div>
+      <div class="category" ng-class="{'picked-category': pickedCategory === category.id}" ng-repeat="category in categories.bar" ng-click="pickCategory(category.id)">
+        {{category.name}}
+      </div>
+    </div> <!-- .bar -->
+  </div> <!-- .categories -->
+</div> <!-- .sidebar -->
 
-<div class="col-md-7 products">
+<div class="col-md-7 col-md-offset-2 products">
   <div class="row product-category" ng-repeat="category in categories.dish.concat(categories.bar)" ng-show="!pickedCategory || pickedCategory === category.id || pickedCategory == category.type">
     <h3>{{category.name}}</h3>
     <div class="col-md-4 product" ng-repeat="product in products[category.id]">
@@ -30,7 +32,7 @@
       </div>
     </div>
   </div>
-</div> <!-- .prodicts -->
+</div> <!-- .products -->
 
 <div class="col-md-3 bill" ng-show="order.products.length">
   <h3>Bill:</h3>
