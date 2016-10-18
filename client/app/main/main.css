@@ -1,6 +1,24 @@
+/* Categories */
 .category,
 .main-category {
     cursor: pointer;
+}
+
+.category {
+    font-size: 18px;
+}
+
+.picked-category {
+    text-decoration: underline;
+}
+
+/* Products */
+.product-category {
+    margin-bottom: 20px;
+}
+
+.product-category h3 {
+    margin-bottom: 15px;
 }
 
 .product {
@@ -34,15 +52,8 @@
     left: 0;
 }
 
-.product-category {
-    margin-bottom: 20px;
-}
-
-.product-category h3 {
-    margin-bottom: 15px;
-}
-
-.product-count {
+.product-count,
+.ordered-product .count {
     display: inline-block;
     margin: 0 5px;
 }
@@ -53,4 +64,48 @@
 
 .btn-add-product {
     margin-left: 10px;
+}
+
+/* Bill */
+.bill h3 {
+    margin-left: 5px;
+}
+
+.bill-header {
+    opacity: .6;
+}
+
+.ordered-product {
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+    padding: 10px 0;
+}
+
+.ordered-product .title {
+    display: inline-block;
+    font-size: 18px;
+    width: 30%;
+}
+
+.ordered-product.bill-header .title {
+    font-size: 16px;
+}
+
+.ordered-product .price {
+    margin-right: 40px;
+}
+
+.ordered-product .sum-price {
+    margin-left: 40px;
+}
+
+.btn-remove-product {
+    border: none;
+    font-size: 25px;
+    position: relative;
+    top: -8px;
+}
+
+.btn-order {
+    font-size: 20px;
 }

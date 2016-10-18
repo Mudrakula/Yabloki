@@ -1,27 +1,27 @@
 <div class="col-md-2 categories">
-  <h3 class="main-category" ng-click="pickCategory(false)">All</h3>
+  <h3 ng-class="{'picked-category': pickedCategory === false}" class="main-category" ng-click="pickCategory(false)">All</h3>
   <div class="dishes main-category">
-    <h3 ng-click="pickCategory('dish')">Dishes</h3>
-    <div class="category" ng-repeat="category in categories.dish" ng-click="pickCategory(category.id)">
+    <h3 ng-class="{'picked-category': pickedCategory == 'dish'}" ng-click="pickCategory('dish')">Dishes</h3>
+    <div class="category" ng-class="{'picked-category': pickedCategory === category.id}" ng-repeat="category in categories.dish" ng-click="pickCategory(category.id)">
       {{category.name}}
     </div>
   </div> <!-- .dishes -->
   <div class="bar main-category">
-    <h3 ng-click="pickCategory('bar')">Bar</h3>
-    <div class="category" ng-repeat="category in categories.bar" ng-click="pickCategory(category.id)">
+    <h3 ng-class="{'picked-category': pickedCategory == 'bar'}" ng-click="pickCategory('bar')">Bar</h3>
+    <div class="category" ng-class="{'picked-category': pickedCategory === category.id}" ng-repeat="category in categories.bar" ng-click="pickCategory(category.id)">
       {{category.name}}
     </div>
   </div> <!-- .bar -->
 </div> <!-- .categories -->
 
-<div class="col-md-8 products">
+<div class="col-md-7 products">
   <div class="row product-category" ng-repeat="category in categories.dish.concat(categories.bar)" ng-show="!pickedCategory || pickedCategory === category.id || pickedCategory == category.type">
     <h3>{{category.name}}</h3>
     <div class="col-md-4 product" ng-repeat="product in products[category.id]">
       <img src="{{product.image}}">
       <div class="title">{{product.name}}</div>
       <div class="portion">{{product.portion}}</div>
-      <div class="price">Price: {{product.price | currency:"UAH"}}</div>
+      <div class="price">Price: {{product.price | currency:""}} UAH</div>
       <div class="actions">
         <span class="btn btn-count" ng-click="decreaseProduct(product)">-</span>
         <span class="product-count">{{product.count || 1}}</span>
@@ -32,19 +32,22 @@
   </div>
 </div> <!-- .prodicts -->
 
-<div class="col-md-2 basket" ng-show="order.products.length">
+<div class="col-md-3 bill" ng-show="order.products.length">
+  <h3>Bill:</h3>
+  <div class="ordered-product bill-header">
+    <span class="title">Product</span>
+    <span class="price">Price</span>
+    <span class="count">Count</span>
+  </div>
   <div class="ordered-product" ng-repeat="product in order.products track by $index">
-    <img src="{{product.image}}">
     <span class="title">{{product.name}}</span>
-    <span class="portion">{{product.portion}}</span>
     <span class="price">{{product.price}}</span>
     <span class="btn btn-count" ng-click="decreaseProduct(product)">-</span>
     <span class="count">{{product.count}}</span>
     <span class="btn btn-count" ng-click="increaseProduct(product)">+</span>
-    <span class="sumPrice">{{product.price * product.count}}</span>
-    <span class="btn btn-add-product" ng-click="removeProduct(product)">Remove</span>
+    <span class="sum-price">{{product.price * product.count}}</span>
+    <span class="btn btn-remove-product pull-right" ng-click="removeProduct(product)">&times;</span>
   </div>
-  <hr>
-  <h3>Total: {{getBill(order)}}</h3>
+  <h3>Total: {{getBill(order) | currency:""}} UAH</h3>
   <span class="btn btn-order" ng-click="go(order)">Order</span>
-</div> <!-- .basket -->
+</div> <!-- .bill -->
