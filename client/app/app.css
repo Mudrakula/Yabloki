@@ -37,3 +37,11 @@
     color: #000;
     padding: 0.2em 0;
 }
+
+.btn {
+    border: 1px solid #ccc;
+}
+
+.btn:hover {
+    background: #e8e8e8;
+}

@@ -78,10 +78,6 @@
     margin: 0 5px;
 }
 
-.btn {
-    border: 1px solid #ccc;
-}
-
 .btn-add-product {
     margin-left: 10px;
 }
@@ -124,6 +120,10 @@
     font-size: 25px;
     position: relative;
     top: -8px;
+}
+
+.btn-remove-product:hover {
+    background: transparent;
 }
 
 .btn-order {
