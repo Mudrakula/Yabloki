@@ -22,6 +22,19 @@ exports.create = function(req, res) {
   });
 };
 
+exports.productReady = function(req, res) {
+  Order.sync().then(function() {
+    Order.update({
+      products: req.body.products,
+      [req.body.type]: req.body.status
+    }, {
+      where: {id: req.body.order}
+    }).then(function(result) {
+      return res.status(200).send('success');
+    });
+  });
+};
+
 exports.complete = function(req, res) {
   Order.sync().then(function() {
     Order.update({

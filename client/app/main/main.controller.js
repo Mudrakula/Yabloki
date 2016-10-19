@@ -37,6 +37,7 @@ angular.module('yablokiApp')
 
     $scope.addProduct = function(product, type) {
       product.count = product.count || 1;
+      product.status = 0;
       product.type = type;
       $scope.order.products.push(_.clone(product));
       product.count = 1;

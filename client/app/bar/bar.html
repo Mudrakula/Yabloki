@@ -9,7 +9,7 @@
       </span>
     </div> <!-- .order-customer -->
     <div class="col-md-4 order-products">
-      <div ng-repeat="product in order.products">
+      <div ng-repeat="product in order.products" ng-class="{'product-ready': product.status}" ng-click="productReady(order, product)">
         {{product.count}} &times; {{product.name}}
       </div>
     </div> <!-- .order-products -->

@@ -24,6 +24,25 @@ angular.module('yablokiApp')
       });
     };
 
+    $scope.productReady = function(order, product) {
+      product.status = 1;
+      var kitchenStatus = _.filter(order.products, function(item) {
+        return item.status < 1;
+      }).length > 0 ? 0 : 1;
+      var products = angular.toJson(order.products);
+      $http.post('/api/orders/product_ready', {
+        order: order.id,
+        products: products,
+        type: 'kitchen_status',
+        status: kitchenStatus
+      }).then(function(result) {
+        if (result.status === 200 && kitchenStatus == 1)
+          $scope.orders = _.filter($scope.orders, function(item) {
+            return item.id !== order.id;
+          });
+      });
+    };
+
     $scope.go = function(order) {
       $http.post('/api/orders/done', {
         id: order.id,
