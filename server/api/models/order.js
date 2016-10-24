@@ -5,6 +5,7 @@ module.exports = function(sequelize, DataTypes) {
     time: DataTypes.BIGINT,
     products: DataTypes.TEXT,
     customer: DataTypes.STRING,
+    status: DataTypes.INTEGER,
     bar_status: DataTypes.INTEGER,
     kitchen_status: DataTypes.INTEGER
   }, {

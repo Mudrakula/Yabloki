@@ -14,10 +14,33 @@ exports.index = function(req, res) {
   });
 };
 
+exports.getCurrent = function(req, res) {
+  Order.sync().then(function() {
+    Order.findOne({
+      where: {
+        customer: req.body.customer,
+        status: 0
+      }
+    }).then(function(result) {
+      return res.status(200).json(result);
+    });
+  });
+};
+
 exports.create = function(req, res) {
   Order.sync().then(function() {
-    Order.create(req.body).then(function() {
-      return res.status(200).send('success');
+    Order.create(req.body).then(function(result) {
+      return res.status(200).json(result);
+    });
+  });
+};
+
+exports.update = function(req, res) {
+  Order.sync().then(function() {
+    Order.update(req.body, {
+      where: {id: req.body.id}
+    }).then(function(result) {
+      return res.status(200).json(result);
     });
   });
 };

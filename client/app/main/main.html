@@ -30,11 +30,11 @@
         <span class="btn btn-count" ng-click="increaseProduct(product)">+</span>
         <span class="btn btn-add-product" ng-click="addProduct(product, category.type)">Add</span>
       </div>
-    </div>
-  </div>
+    </div> <!-- .product -->
+  </div> <!-- .product-category -->
 </div> <!-- .products -->
 
-<div class="col-md-3 bill" ng-show="order.products.length">
+<div class="col-md-3 col-md-offset-9 bill" ng-show="order.products.length">
   <h3>Bill:</h3>
   <div class="ordered-product bill-header">
     <span class="title">Product</span>
@@ -53,3 +53,25 @@
   <h3>Total: {{getBill(order) | currency:""}} UAH</h3>
   <span class="btn btn-order" ng-click="go(order)">Order</span>
 </div> <!-- .bill -->
+
+<div ng-if="currentOrder" class="col-md-3 current-order">
+  <h3 class="text-right">Total: {{getBill(currentOrder) | currency:""}} UAH</h3>
+  <div class="text-right">
+    <span class="order-details btn" ng-class="{'order-details-shown': details}" ng-click="showDetails(currentOrder)">Details</span>
+    <span class="btn" ng-click="checkPlease(currentOrder)">Check Please!</span>
+  </div>
+</div>
+<div ng-if="details" class="col-md-3 current-order-details">
+  <h3>Already ordered:</h3>
+  <div class="ordered-product bill-header">
+    <span class="title">Product</span>
+    <span class="price">Price</span>
+    <span class="count">Count</span>
+  </div>
+  <div class="ordered-product" ng-repeat="product in currentOrder.products track by $index">
+    <span class="title">{{product.name}}</span>
+    <span class="price">{{product.price}}</span>
+    <span class="count">{{product.count}}</span>
+    <span class="sum-price">{{product.price * product.count}}</span>
+  </div>
+</div>

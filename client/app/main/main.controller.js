@@ -5,9 +5,12 @@ angular.module('yablokiApp')
     $scope.categories = [];
     $scope.pickedCategory = false;
     $scope.products = [];
+    $scope.currentOrder = false;
     $scope.order = {
-      products: []
+      products: [],
+      customer: 2
     };
+    $scope.details = false;
 
     $scope.getCategories = function() {
       $http.get('/api/categories').then(function(result) {
@@ -20,6 +23,17 @@ angular.module('yablokiApp')
       $http.get('/api/products').then(function(result) {
         if (result.status === 200)
           $scope.products = _.groupBy(result.data, 'category_id');
+      });
+    };
+
+    $scope.getOrder = function() {
+      $http.post('/api/orders/current', {
+        customer: $scope.order.customer
+      }).then(function(result) {
+        if (result.data !== null) {
+          $scope.currentOrder = result.data;
+          $scope.currentOrder.products = angular.fromJson(result.data.products);
+        }
       });
     };
 
@@ -45,13 +59,13 @@ angular.module('yablokiApp')
 
     $scope.removeProduct = function(product) {
       $scope.order.products = _.filter($scope.order.products, function(item) {
-        return item.id !== product.id;
+        return item !== product;
       });
     };
 
     $scope.getBill = function(order) {
       var bill = 0;
-      $scope.order.products.forEach(function(item, i, arr) {
+      order.products.forEach(function(item, i, arr) {
         bill += item.price * (item.count || 1);
       });
 
@@ -59,18 +73,40 @@ angular.module('yablokiApp')
     };
 
     $scope.go = function(order) {
-      $http.post('/api/orders', {
-        time: Date.now(),
-        products: angular.toJson(order.products),
-        customer: 2
-      }).then(function(result) {
-        if (result.status === 200)
-          $scope.order = {
-            products: []
-          };
-      });
+      if ($scope.currentOrder) {
+        var totalProducts = $scope.currentOrder.products.concat($scope.order.products);
+        $http.post('api/orders/update', {
+          id: $scope.currentOrder.id,
+          time: Date.now(),
+          products: angular.toJson(totalProducts)
+        }).then(function(result) {
+          if (result.status === 200) {
+            $scope.currentOrder.products = totalProducts;
+            $scope.order = {
+              products: []
+            };
+          }
+        });
+      } else {
+        $http.post('/api/orders', {
+          time: Date.now(),
+          products: angular.toJson(order.products),
+          customer: order.customer
+        }).then(function(result) {
+          if (result.status === 200)
+            $scope.currentOrder = result.data;
+            $scope.order = {
+              products: []
+            };
+        });
+      }
+    };
+
+    $scope.showDetails = function(order) {
+      $scope.details = ! $scope.details;
     };
 
     $scope.getCategories();
     $scope.getProducts();
+    $scope.getOrder();
   });
